@@ -13,12 +13,27 @@ using Microsoft.Phone.Controls;
 
 namespace MoodTracker
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class Page1 : PhoneApplicationPage
     {
-        // Constructor
-        public MainPage()
+        public Page1()
         {
             InitializeComponent();
+            textBlock1.Text = @"This application requires a connection to the Microsoft"+
+                              @"HealthVault Service to store weight measurements. You will need" +
+                              @"to sign up for a free HealthVault account and authorize this" +
+                              @"application to access Weight measurements in your HealthVault" +
+                              @" record. Press Continue to begin the sign-up process.";
+            button1.Click += new RoutedEventHandler(authenticateHealthVault);
+        }
+
+        void authenticateHealthVault(object sender, RoutedEventArgs e)
+        {
+            Uri pageUri = new Uri("/MyMood.xaml", UriKind.RelativeOrAbsolute);
+
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(pageUri);
+            });
         }
     }
 }
