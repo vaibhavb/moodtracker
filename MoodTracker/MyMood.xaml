@@ -22,9 +22,17 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MOOD TRACKER" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="My Mood" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="MOOD TRACKER" 
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="My Mood" Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="c_RecordName" Style="{StaticResource PhoneTextTitle1Style}" 
+                       FontSize="32" VerticalAlignment="Center" Text=" "/>
         </StackPanel>
+
+        <ProgressBar x:Name="c_progressBar" VerticalAlignment="Top" Grid.ColumnSpan="3" 
+                     IsIndeterminate="True" Visibility="Collapsed"/>
+                
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->
