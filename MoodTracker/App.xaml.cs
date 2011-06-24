@@ -13,10 +13,34 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
+using Microsoft.Health.Mobile;
+
 namespace MoodTracker
 {
     public partial class App : Application
     {
+        
+        public static HealthVaultService HealthVaultService { get; set; }
+        public static string HealthVaultShellUrl { get; set; }
+
+
+        static string platformUrl = @"https://platform.healthvault-ppe.com/platform/wildcat.ashx";
+        static string shellUrl = @"https://account.healthvault-ppe.com";
+        static string masterAppId = "83bf507d-9186-407f-a6cd-b2d65f558690";
+
+        // Code to execute when the application is launching (eg, from Start)
+        // This code will not execute when the application is reactivated
+        private void Application_Launching(object sender, LaunchingEventArgs e)
+        {
+            HealthVaultService = new HealthVaultService(platformUrl, shellUrl, new Guid(masterAppId));
+        }
+        // Code to execute when the application is activated (brought to foreground)
+        // This code will not execute when the application is first launched
+        private void Application_Activated(object sender, ActivatedEventArgs e)
+        {
+            HealthVaultService = new HealthVaultService(platformUrl, shellUrl, new Guid(masterAppId));
+        }
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -50,18 +74,6 @@ namespace MoodTracker
 
             // Phone-specific initialization
             InitializePhoneApplication();
-        }
-
-        // Code to execute when the application is launching (eg, from Start)
-        // This code will not execute when the application is reactivated
-        private void Application_Launching(object sender, LaunchingEventArgs e)
-        {
-        }
-
-        // Code to execute when the application is activated (brought to foreground)
-        // This code will not execute when the application is first launched
-        private void Application_Activated(object sender, ActivatedEventArgs e)
-        {
         }
 
         // Code to execute when the application is deactivated (sent to background)
