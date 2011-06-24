@@ -61,6 +61,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmotionalStateModel.cs" />
     <Compile Include="HostedBrowser.xaml.cs">
       <DependentUpon>HostedBrowser.xaml</DependentUpon>
     </Compile>

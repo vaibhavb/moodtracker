@@ -103,7 +103,6 @@ namespace MoodTracker
             Dispatcher.BeginInvoke(() =>
             {
                 c_RecordName.Text = recordName;
-                c_RecordImage.Source = null;
             });
         }
 
