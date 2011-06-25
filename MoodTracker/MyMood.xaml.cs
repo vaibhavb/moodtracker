@@ -95,6 +95,8 @@ namespace MoodTracker
             if (App.HealthVaultService.CurrentRecord != null)
             {
                 SetRecordName(App.HealthVaultService.CurrentRecord.RecordName);
+                HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, GetThingsCompleted);
+                SetProgressBarVisibility(true);
             }
         }
 
@@ -112,6 +114,37 @@ namespace MoodTracker
             {
                 c_progressBar.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
             });
+        }
+
+
+        void GetThingsCompleted(object sender, HealthVaultResponseEventArgs e)
+        {
+            SetProgressBarVisibility(false);
+
+            if (e.ErrorText == null)
+            {
+
+                string displayValue;
+                XElement responseNode = XElement.Parse(e.ResponseXml);
+                XElement latestEmotion = (from thingNode in responseNode.Descendants("thing")
+                                          orderby Convert.ToDateTime(thingNode.Element("eff-date").Value) descending
+                                          select thingNode).FirstOrDefault<XElement>();
+
+                EmotionalStateModel emotionalState =
+                    new EmotionalStateModel();
+
+                emotionalState.Parse(latestEmotion.Descendants("data-xml").Descendants("emotion").Single());
+
+                displayValue = Convert.ToDateTime(latestEmotion.Element("eff-date").Value).ToString() + "  " +
+                    System.Enum.GetName(typeof(Mood), emotionalState.Mood) + " " +
+                    System.Enum.GetName(typeof(Stress), emotionalState.Stress) + " " +
+                    System.Enum.GetName(typeof(Wellbeing), emotionalState.Wellbeing);
+
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    c_LastEmotionalState.Text += displayValue;
+                });
+            }
         }
 
     }
