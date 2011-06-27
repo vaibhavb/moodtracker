@@ -18,8 +18,22 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
 
+        <!-- This is the progressbar for the application -->
+        <ProgressBar x:Name="c_progressBar" VerticalAlignment="Top"
+                     IsIndeterminate="True" Visibility="Collapsed"/>
+        
+        <!-- User Text Notification -->
+        <TextBlock x:Name="ErrorMessage"
+                   Visibility="Collapsed"
+                   TextAlignment="Center"
+                   Margin="1 1 1 1"
+                   Style="{StaticResource PhoneTextNormalStyle}"           
+                   >
+        </TextBlock>
+        
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="MOOD TRACKER" 
@@ -30,18 +44,162 @@
                        FontSize="32" VerticalAlignment="Center" Text=" "/>
         </StackPanel>
 
-        <ProgressBar x:Name="c_progressBar" VerticalAlignment="Top" Grid.ColumnSpan="3" 
-                     IsIndeterminate="True" Visibility="Collapsed"/>
-        <TextBlock Height="111" Margin="0,0,0,116" Grid.Row="1" 
-                   TextWrapping="Wrap" 
-                   VerticalAlignment="Bottom">
-            <Run Text="Last Emotional State : "/>
-            <LineBreak/>
-            <Run Text="Date                           Mood    Stress   Wellbeing"/>
-            <LineBreak/>
-            <Run x:Name="c_LastEmotionalState"/>
-        </TextBlock>
+        <!-- Emotion State Input -->
+        <StackPanel x:Name="InputPanel" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 
+                <TextBlock x:Name="MoodSliderTitle" Text="MOOD" 
+                           TextAlignment="Left"
+                           Grid.Row="0" Grid.Column="0"
+                           Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBlock x:Name="MoodSliderValue" 
+                           Grid.Column="2" Grid.Row="0"
+                           TextAlignment="Right"
+                           Text=""/>
+                <Slider Height="80" Width="480" 
+                    Grid.Row="1" Grid.ColumnSpan="3"
+                    ValueChanged="c_MoodSlider_ValueChanged"
+                    Name="c_MoodSlider" 
+                    VerticalAlignment="Top" 
+                    Maximum="5" SmallChange="1" 
+                    DataContext="{Binding}" HorizontalAlignment="Left"                     
+                    />
+            </Grid>
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock x:Name="StressSliderTitle" Text="STRESS" 
+                           TextAlignment="Left"
+                           Grid.Row="0" Grid.Column="0"
+                           Style="{StaticResource PhoneTextNormalStyle}"/>
+
+                <TextBlock x:Name="StressSliderValue" 
+                           Grid.Column="2" Grid.Row="0"
+                           TextAlignment="Right"/>
+                <Slider  Height="80" Width="480"
+                    Grid.Row="1" Grid.ColumnSpan="3"
+                    HorizontalAlignment="Left" 
+                    Name="c_StressSlider" 
+                    VerticalAlignment="Top"
+                    Maximum="5" SmallChange="1" 
+                    DataContext="{Binding}" 
+                    ValueChanged="c_StressSlider_ValueChanged"    
+                        />
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock x:Name="WellbeingSliderTitle" Text="WELLBEING" 
+                           TextAlignment="Left"
+                           Grid.Row="0" Grid.Column="0"
+                           Style="{StaticResource PhoneTextNormalStyle}"/>
+
+                <TextBlock x:Name="WellbeingSliderValue" 
+                           Grid.Column="2" Grid.Row="0"
+                           TextAlignment="Right"/>
+                
+                <Slider Height="80" Width="480"
+                    Grid.Row="1" Grid.ColumnSpan="3"
+                    HorizontalAlignment="Left" 
+                    Name="c_WellbeingSlider" 
+                    VerticalAlignment="Top" 
+                    Maximum="5" SmallChange="1" 
+                    DataContext="{Binding}" 
+                    ValueChanged="c_WellbeingSlider_ValueChanged" />
+            </Grid>
+            
+            <Button Content="Save it!" 
+                    Height="80" 
+                    Name="button1" Width="346" Click="button1_Click" />
+        </StackPanel>
+        
+        <!-- Last Reading -->
+        <Grid x:Name="LastReading" Grid.Row="2"
+              Background="{StaticResource PhoneAccentBrush}"
+              VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock 
+                   x:Name="c_LastUpdated"
+                   TextWrapping="Wrap" 
+                   VerticalAlignment="Top" 
+                   Grid.ColumnSpan="3"
+                   Text="Last Update: "
+                   Style="{StaticResource PhoneTextNormalStyle}"
+                   >                   
+            </TextBlock>
+
+            <TextBlock x:Name="txt_Mood" Grid.Row="1" Grid.Column="0"
+                       Text="Mood"
+                       TextAlignment="Center"
+                       Style="{StaticResource PhoneTextNormalStyle}">
+            </TextBlock>
+            <TextBlock x:Name="txt_Stress"  Grid.Row="1" 
+                       Text="Stress "
+                       TextAlignment="Center"
+                       Grid.Column="1"
+                       Style="{StaticResource PhoneTextNormalStyle}">
+            </TextBlock>
+            <TextBlock x:Name="txt_Wellbeing"   
+                       Text="Wellbeing "
+                       TextAlignment="Center"
+                       Grid.Row="1" Grid.Column="2"
+                       Style="{StaticResource PhoneTextNormalStyle}">
+            </TextBlock>
+
+            <TextBlock x:Name="c_Mood" Grid.Row="2" Grid.Column="0"
+                       Text=""
+                       TextAlignment="Center"
+                       Style="{StaticResource PhoneTextNormalStyle}">
+            </TextBlock>
+            <TextBlock x:Name="c_Stress"  Grid.Row="2" 
+                       Text=""
+                       TextAlignment="Center"
+                       Grid.Column="1"
+                       Style="{StaticResource PhoneTextNormalStyle}">
+            </TextBlock>
+            <TextBlock x:Name="c_Wellbeing"   
+                       Text=""
+                       TextAlignment="Center"
+                       Grid.Row="2" Grid.Column="2"
+                       Style="{StaticResource PhoneTextNormalStyle}">
+            </TextBlock>
+        </Grid>
+       
     </Grid>
     
 </phone:PhoneApplicationPage>

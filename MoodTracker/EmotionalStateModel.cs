@@ -20,10 +20,10 @@ namespace MoodTracker
     ///     2. Creating an emotional state object to be store in HealthVault
     ///     3. Expose the important properties of emotional state available in HealthVault SDK
     /// </summary>
-    public class EmotionalStateModel
+    public class EmotionalStateModel : HealthRecordItemModel
     {
         public readonly static string TypeId = "4b7971d6-e427-427d-bf2c-2fbcf76606b3";
-        public static string ThingXml =
+        private string thingXml =
             @"<info><thing>
                 <type-id>4b7971d6-e427-427d-bf2c-2fbcf76606b3</type-id>
                 <thing-state>Active</thing-state>
@@ -39,13 +39,13 @@ namespace MoodTracker
                         <time>
                             <h>{3}</h>
                             <m>{4}</m>
-                            <s>{</s>
-                            <f>0</f>
+                            <s>{5}</s>
+                            <f>{6}</f>
                         </time>
                     </when>
-                    <mood>5</mood>
-                    <stress>5</stress>
-                    <wellbeing>1</wellbeing>
+                    <mood>{7}</mood>
+                    <stress>{8}</stress>
+                    <wellbeing>{9}</wellbeing>
                   </emotion>
                   <common/>
                 </data-xml>
@@ -62,6 +62,27 @@ namespace MoodTracker
                 ((XElement)emotionalState.Element("wellbeing")).Value, true);
         }
 
+        /// <summary>
+        /// Get the Xml representing this type
+        /// </summary>
+        /// <returns></returns>
+        public override string GetXml()
+        {
+            return string.Format(
+                thingXml,
+                When.Year,
+                When.Month,
+                When.Day,
+                When.Hour,
+                When.Minute,
+                When.Second,
+                When.Millisecond,
+                ((int)this.Mood).ToString(),
+                ((int)this.Stress).ToString(),
+                ((int)this.Wellbeing).ToString());
+        }
+
+        public DateTime When { get; set; }
         public Mood Mood { get; set; }
         public Stress Stress { get; set; }
         public Wellbeing Wellbeing { get; set; }

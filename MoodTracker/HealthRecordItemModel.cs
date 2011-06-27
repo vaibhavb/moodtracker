@@ -18,6 +18,13 @@ namespace MoodTracker
     /// </summary>
     public class HealthRecordItemModel
     {
-
+        /// <summary>
+        /// Returns the Xml represenation of the object
+        /// </summary>
+        /// <returns>Xml object representation</returns>
+        public virtual string GetXml()
+        {
+            return "";
+        }
     }
 }
