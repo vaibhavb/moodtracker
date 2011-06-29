@@ -21,25 +21,25 @@ namespace MoodTracker
         /// </summary>
         /// <param name="typeId">HealthVault Type Id</param>
         /// <param name="responseCallback">Response Handler for the Type</param>
-        public static void GetThings(string typeId, 
+        public static void GetThings(string typeId, int maxItems,
             EventHandler<HealthVaultResponseEventArgs> responseCallback)
         {
             string thingXml = @"
             <info>
-                <group>
+                <group max='{0}'>
                     <filter>
-                        <type-id>{0}</type-id>
+                        <type-id>{1}</type-id>
                         <thing-state>Active</thing-state>
                     </filter>
                     <format>
                         <section>core</section>
                         <xml/>
-                        <type-version-format>{0}</type-version-format>
+                        <type-version-format>{1}</type-version-format>
                     </format>
                 </group>
             </info>";
 
-            XElement info = XElement.Parse(string.Format(thingXml, typeId));
+            XElement info = XElement.Parse(string.Format(thingXml, maxItems, typeId));
             HealthVaultRequest request = new HealthVaultRequest("GetThings", "3", info, responseCallback);
             App.HealthVaultService.BeginSendRequest(request);
         }
@@ -48,7 +48,7 @@ namespace MoodTracker
         /// <summary>
         /// PutThings Method
         /// </summary>
-        /// <param name="typeId">This should be a filter</param>
+        /// <param name="item">The health item to upload</param>
         /// <param name="responseCallback">Function to resolve callback</param>
         public static void PutThings(HealthRecordItemModel item,
             EventHandler<HealthVaultResponseEventArgs> responseCallback)

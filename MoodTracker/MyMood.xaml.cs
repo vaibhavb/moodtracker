@@ -95,7 +95,8 @@ namespace MoodTracker
             if (App.HealthVaultService.CurrentRecord != null)
             {
                 SetRecordName(App.HealthVaultService.CurrentRecord.RecordName);
-                HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, GetThingsCompleted);
+                // We are only interested in the last item
+                HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, 1, GetThingsCompleted);
                 SetProgressBarVisibility(true);
             }
         }
