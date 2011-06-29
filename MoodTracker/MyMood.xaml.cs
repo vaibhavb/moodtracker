@@ -137,7 +137,6 @@ namespace MoodTracker
 
             if (e.ErrorText == null)
             {
-
                 XElement responseNode = XElement.Parse(e.ResponseXml);
                 // using linq to get the latest reading of emotional state
                 XElement latestEmotion = (from thingNode in responseNode.Descendants("thing")
@@ -216,6 +215,17 @@ namespace MoodTracker
                 StressSliderValue.Text = GetSliderValue(typeof(Stress),
                     c_StressSlider);
             });
+        }
+
+        private void ApplicationBarMenuItem_Click(object sender, EventArgs e)
+        {
+            Uri pageUri = new Uri("/MyHistory.xaml", UriKind.RelativeOrAbsolute);
+            NavigationService.Navigate(pageUri);
+        }
+
+        private void ApplicationBarMenuItem_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

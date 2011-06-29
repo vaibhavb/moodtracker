@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AmCharts.Windows.QuickCharts.WP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\amChartsQuickCharts.1.1\lib\sl3-wp\AmCharts.Windows.QuickCharts.WP.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Windows" />
@@ -67,6 +70,9 @@
     <Compile Include="HostedBrowser.xaml.cs">
       <DependentUpon>HostedBrowser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MyHistory.xaml.cs">
+      <DependentUpon>MyHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyMood.xaml.cs">
       <DependentUpon>MyMood.xaml</DependentUpon>
     </Compile>
@@ -84,6 +90,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MyHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyMood.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +104,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>

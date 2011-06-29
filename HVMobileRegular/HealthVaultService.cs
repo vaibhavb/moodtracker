@@ -238,7 +238,8 @@ namespace Microsoft.Health.Mobile
             if (CurrentRecord != null)
             {
                 settings.Add(new XElement("PersonId", CurrentRecord.PersonId.ToString()),
-                             new XElement("RecordId", CurrentRecord.RecordId.ToString()));
+                             new XElement("RecordId", CurrentRecord.RecordId.ToString()),
+                             new XElement("RecordName", CurrentRecord.RecordName));
             }
 
             MobilePlatform.SaveTextToFile(name + ".xml", settings.ToString());
@@ -274,6 +275,7 @@ namespace Microsoft.Health.Mobile
                     Guid recordId = new Guid(settings.Element("RecordId").Value);
 
                     CurrentRecord = new HealthVaultRecord(personId, recordId);
+                    CurrentRecord.RecordName = settings.Element("RecordName").Value;
                 }
             }
         }

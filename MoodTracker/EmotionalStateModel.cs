@@ -82,6 +82,12 @@ namespace MoodTracker
                 ((int)this.Wellbeing).ToString());
         }
 
+        public String FormattedWhen
+        {
+            get{
+                return String.Format("{0:dd/MM/yy}",When);
+            }
+        }
         public DateTime When { get; set; }
         public Mood Mood { get; set; }
         public Stress Stress { get; set; }
