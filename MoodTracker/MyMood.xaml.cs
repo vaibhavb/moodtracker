@@ -29,7 +29,7 @@ namespace MoodTracker
     public partial class MainPage : PhoneApplicationPage
     {
         public const string SettingsFilename = "Settings.xml";
-        bool _addingRecord;
+        bool _addingRecord = false;
         List<string> _currentThingIds = new List<string>();
 
         // Constructor
@@ -96,7 +96,7 @@ namespace MoodTracker
             {
                 SetRecordName(App.HealthVaultService.CurrentRecord.RecordName);
                 // We are only interested in the last item
-                HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, 1, GetThingsCompleted);
+                HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, 1, null, null, GetThingsCompleted);
                 SetProgressBarVisibility(true);
             }
         }
@@ -152,9 +152,13 @@ namespace MoodTracker
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     c_LastUpdated.Text += lastTime;
-                    c_Mood.Text += System.Enum.GetName(typeof(Mood), emotionalState.Mood);
-                    c_Stress.Text += System.Enum.GetName(typeof(Stress), emotionalState.Stress);
-                    c_Wellbeing.Text += System.Enum.GetName(typeof(Wellbeing), emotionalState.Wellbeing);
+                    c_MoodSlider.Value = (double)emotionalState.Mood;
+                    c_StressSlider.Value = (double)emotionalState.Stress;
+                    c_WellbeingSlider.Value = (double)emotionalState.Wellbeing;
+                    this.DataContext = this;
+                    //c_Mood.Text += System.Enum.GetName(typeof(Mood), emotionalState.Mood);
+                    //c_Stress.Text += System.Enum.GetName(typeof(Stress), emotionalState.Stress);
+                    //c_Wellbeing.Text += System.Enum.GetName(typeof(Wellbeing), emotionalState.Wellbeing);
                 });
             }
         }
@@ -195,7 +199,12 @@ namespace MoodTracker
         {
             Dispatcher.BeginInvoke(() =>
                 {
-                    MoodSliderValue.Text = GetSliderValue(typeof(Mood), c_MoodSlider);
+                    string value = GetSliderValue(typeof(Mood), c_MoodSlider);
+                    MoodSliderValue.Text = value;
+                    c_MoodSlider_Image.Source = new BitmapImage(new Uri(
+                        string.Format("Images/{0}_SM.png", value.ToLower()), UriKind.Relative));
+                    c_vmudi_mood.Source = new BitmapImage( new Uri(
+                        string.Format("Images/vmudi/vmudi_{0}.png", value.ToLower()), UriKind.Relative));
                 });
         }
 
@@ -203,8 +212,12 @@ namespace MoodTracker
         {
             Dispatcher.BeginInvoke(() =>
             {
-                WellbeingSliderValue.Text = GetSliderValue(typeof(Wellbeing), 
-                    c_WellbeingSlider);
+                string value = GetSliderValue(typeof(Wellbeing), c_WellbeingSlider);
+                WellbeingSliderValue.Text = value;
+                c_WellbeingSlider_Image.Source = new BitmapImage(new Uri(
+                    string.Format("Images/{0}_SM.png", value.ToLower()), UriKind.Relative));
+                c_vmudi_wellbeing.Source = new BitmapImage(new Uri(
+                        string.Format("Images/vmudi/vmudi_{0}.png", value.ToLower()), UriKind.Relative));
             });
         }
 
@@ -212,20 +225,25 @@ namespace MoodTracker
         {
             Dispatcher.BeginInvoke(() =>
             {
-                StressSliderValue.Text = GetSliderValue(typeof(Stress),
-                    c_StressSlider);
+                string value = GetSliderValue(typeof(Stress), c_StressSlider);
+                StressSliderValue.Text = value;
+                c_StressSlider_Image.Source = new BitmapImage(new Uri(
+                    string.Format("Images/{0}_SM.png", value.ToLower()), UriKind.Relative));
+                c_vmudi_stress.Source = new BitmapImage(new Uri(
+                        string.Format("Images/vmudi/vmudi_{0}.png", value.ToLower()), UriKind.Relative));
             });
         }
 
-        private void ApplicationBarMenuItem_Click(object sender, EventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             Uri pageUri = new Uri("/MyHistory.xaml", UriKind.RelativeOrAbsolute);
             NavigationService.Navigate(pageUri);
         }
 
-        private void ApplicationBarMenuItem_Click_1(object sender, EventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
         }
+
     }
 }

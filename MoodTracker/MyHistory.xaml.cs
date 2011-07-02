@@ -38,17 +38,35 @@ namespace MoodTracker
             InitializeComponent();
         }
 
+        public DateTime BaseTimeForGraph
+        {
+            get;
+            set;
+        }
+
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             App.HealthVaultService.LoadSettings(SettingsFilename);
+            BaseTimeForGraph = DateTime.Now; 
             if (App.HealthVaultService.CurrentRecord != null)
             {
                 SetRecordName(App.HealthVaultService.CurrentRecord.RecordName);
-                // Get the last emotional state info and try to plot a graph 
-                HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, 5, GetThingsCompleted);
+                RefreshGraph();
                 SetProgressBarVisibility(true);
             }
             this.DataContext = this;
+        }
+
+        void RefreshGraph()
+        {
+            this.EmotionList.Clear();
+            this.GraphLabel.Text = string.Format("Readings for last 7 Days from {0}",
+                BaseTimeForGraph.ToString("MMM dd, yyyy"));
+            // Get the last emotional state info and try to plot a graph 
+            HealthVaultMethods.GetThings(EmotionalStateModel.TypeId, null,
+                BaseTimeForGraph.Subtract(new TimeSpan(7, 0, 0, 0)),
+                BaseTimeForGraph,
+                GetThingsCompleted);
         }
 
         void GetThingsCompleted(object sender, HealthVaultResponseEventArgs e)
@@ -113,6 +131,23 @@ namespace MoodTracker
         private void ApplicationBarMenuItem_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button_Next.Visibility = System.Windows.Visibility.Visible;
+            BaseTimeForGraph = BaseTimeForGraph.Subtract(new TimeSpan(7, 0, 0, 0));
+            RefreshGraph();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            BaseTimeForGraph = BaseTimeForGraph.Add(new TimeSpan(7, 0, 0, 0));
+            RefreshGraph();
+            if (BaseTimeForGraph >= DateTime.Now.Subtract(new TimeSpan(7,0,0,0)))
+            {
+                Button_Next.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
     }
 }

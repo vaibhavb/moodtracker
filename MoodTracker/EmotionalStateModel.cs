@@ -53,13 +53,25 @@ namespace MoodTracker
 
         public void Parse(XElement emotionalState)
         {
-            
-            this.Mood = (Mood) System.Enum.Parse(typeof(Mood),
-                ((XElement)emotionalState.Element("mood")).Value, true);
-            this.Stress = (Stress) System.Enum.Parse(typeof(Stress),
-                ((XElement)emotionalState.Element("stress")).Value, true);
-            this.Wellbeing = (Wellbeing) System.Enum.Parse(typeof(Wellbeing),
+            this.Mood = Mood.None;
+            this.Stress = Stress.None;
+            this.Wellbeing = Wellbeing.None;
+
+            if (emotionalState.Element("mood") != null)
+            {
+                this.Mood = (Mood)System.Enum.Parse(typeof(Mood),
+                    ((XElement)emotionalState.Element("mood")).Value, true);
+            }
+            if (emotionalState.Element("stress") != null)
+            {
+                this.Stress = (Stress)System.Enum.Parse(typeof(Stress),
+                    ((XElement)emotionalState.Element("stress")).Value, true);
+            }
+            if (emotionalState.Element("wellbeing") != null)
+            {
+                this.Wellbeing = (Wellbeing)System.Enum.Parse(typeof(Wellbeing),
                 ((XElement)emotionalState.Element("wellbeing")).Value, true);
+            }
         }
 
         /// <summary>
@@ -85,7 +97,7 @@ namespace MoodTracker
         public String FormattedWhen
         {
             get{
-                return String.Format("{0:dd/MM/yy}",When);
+                return String.Format("{0:dd/MM}",When);
             }
         }
         public DateTime When { get; set; }

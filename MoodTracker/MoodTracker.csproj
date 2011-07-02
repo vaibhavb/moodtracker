@@ -25,6 +25,8 @@
     <SilverlightAppEntry>MoodTracker.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -115,6 +117,53 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\able.png" />
+    <Resource Include="Images\able_SM.png" />
+    <Resource Include="Images\depressed.png" />
+    <Resource Include="Images\depressed_SM.png" />
+    <Resource Include="Images\elated.png" />
+    <Resource Include="Images\elated_SM.png" />
+    <Resource Include="Images\happy.png" />
+    <Content Include="Images\happy_SM.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\healthy.png" />
+    <Resource Include="Images\healthy_SM.png" />
+    <Resource Include="Images\high.png" />
+    <Resource Include="Images\high_SM.png" />
+    <Resource Include="Images\impaired.png" />
+    <Resource Include="Images\impaired_SM.png" />
+    <Resource Include="Images\low.png" />
+    <Resource Include="Images\low_SM.png" />
+    <Resource Include="Images\moderate.png" />
+    <Resource Include="Images\moderate_SM.png" />
+    <Resource Include="Images\neutral.png" />
+    <Resource Include="Images\neutral_SM.png" />
+    <Resource Include="Images\sad.png" />
+    <Resource Include="Images\sad_SM.png" />
+    <Resource Include="Images\sick.png" />
+    <Resource Include="Images\sick_SM.png" />
+    <Resource Include="Images\veryhigh.png" />
+    <Resource Include="Images\veryHigh_SM.png" />
+    <Resource Include="Images\verylow.png" />
+    <Resource Include="Images\verylow_SM.png" />
+    <Resource Include="Images\vigorous.png" />
+    <Resource Include="Images\vigorous_SM.png" />
+    <Resource Include="Images\vmudi\vmudi_able.png" />
+    <Resource Include="Images\vmudi\vmudi_depressed.png" />
+    <Resource Include="Images\vmudi\vmudi_elated.png" />
+    <Resource Include="Images\vmudi\vmudi_happy.png" />
+    <Resource Include="Images\vmudi\vmudi_healthy.png" />
+    <Resource Include="Images\vmudi\vmudi_high.png" />
+    <Resource Include="Images\vmudi\vmudi_impaired.png" />
+    <Resource Include="Images\vmudi\vmudi_low.png" />
+    <Resource Include="Images\vmudi\vmudi_moderate.png" />
+    <Resource Include="Images\vmudi\vmudi_neutral.png" />
+    <Resource Include="Images\vmudi\vmudi_sad.png" />
+    <Resource Include="Images\vmudi\vmudi_sick.png" />
+    <Resource Include="Images\vmudi\vmudi_veryhigh.png" />
+    <Resource Include="Images\vmudi\vmudi_verylow.png" />
+    <Resource Include="Images\vmudi\vmudi_vigorous.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +172,7 @@
       <Name>HVMobilePhone</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

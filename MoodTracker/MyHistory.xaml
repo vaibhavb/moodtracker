@@ -16,7 +16,8 @@
     Loaded="PhoneApplicationPage_Loaded">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" 
+          Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -27,37 +28,81 @@
                      IsIndeterminate="True" Visibility="Collapsed"/>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MOOD TRACKER" 
-                       Style="{StaticResource PhoneTextNormalStyle}"/>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="120"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="ApplicationTitle" Text="MOOD TRACKER"
+                       Grid.Column="0"
+                       Style="{StaticResource PhoneTextNormalStyle}" TextAlignment="Left"/>
+                <TextBlock x:Name="c_RecordName"
+                       Grid.Column="1"
+                       Text=" " 
+                       Style="{StaticResource PhoneTextNormalStyle}"
+                       TextAlignment="Right"/>
+            </Grid>
             <TextBlock x:Name="PageTitle" Text="My History" Margin="9,-7,0,0" 
                        Style="{StaticResource PhoneTextTitle1Style}"/>
-            <TextBlock x:Name="c_RecordName" Style="{StaticResource PhoneTextTitle1Style}" 
-                       FontSize="32" VerticalAlignment="Center" Text=" "/>
         </StackPanel>
+
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <amq:SerialChart x:Name="EmotionsChart"
-                         BorderThickness="1"
-                         DataSource="{Binding EmotionList}" 
-                         CategoryValueMemberPath="FormattedWhen"
-                         AxisForeground="White"
-                         PlotAreaBackground="Black"
-                         GridStroke="DarkGray">
-                <amq:SerialChart.Graphs>
-                    <amq:LineGraph ValueMemberPath="Mood" 
-                                   Title="Mood" Brush="Blue" 
-                                   BorderBrush="Cornsilk"/>
-                    <amq:ColumnGraph ValueMemberPath="Stress" 
-                                   Title="Stress" Brush="#8000FF00" 
-                                   ColumnWidthAllocation="0.4" />
-                    <amq:LineGraph ValueMemberPath="Wellbeing" 
-                                   Title="Wellbeing" 
-                                   Brush="#80FF0000"/>
-                </amq:SerialChart.Graphs>
-            </amq:SerialChart>
+            <StackPanel>
+                <!-- Graph Label -->
+                <Grid Background="{StaticResource PhoneAccentBrush}"
+                      Margin="20 0 20 0">
+                    <TextBlock 
+                       Text=""
+                       Margin="10 0 0 10"
+                       x:Name="GraphLabel"></TextBlock>
+                </Grid>
+                
+                <amq:SerialChart x:Name="EmotionsChart"
+                             BorderThickness="1"
+                             DataSource="{Binding EmotionList}" 
+                             CategoryValueMemberPath="FormattedWhen"
+                             AxisForeground="White"
+                             PlotAreaBackground="Black"
+                             GridStroke="DarkGray" Height="463" Width="450">
+                    <amq:SerialChart.Graphs>
+                        <amq:LineGraph ValueMemberPath="Mood" 
+                                       Title="Mood" Brush="Blue"
+                                       StrokeThickness="6"
+                                       BorderBrush="Cornsilk"/>
+                        <amq:LineGraph ValueMemberPath="Stress" 
+                                       Title="Stress" Brush="#8000FF00" 
+                                       StrokeThickness="8" />
+                        <amq:LineGraph ValueMemberPath="Wellbeing" 
+                                       Title="Wellbeing" 
+                                       StrokeThickness="2"
+                                       Brush="#80FF0000"/>
+                    </amq:SerialChart.Graphs>
+                </amq:SerialChart>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Button_Prev"
+                        Width="120" Content="Prev" Click="Button_Click" 
+                        Background="{StaticResource PhoneAccentBrush}" 
+                            HorizontalAlignment="Left" Margin="0,-24,0,0"></Button>
+                    <Button x:Name="Button_Next"
+                            Height="80" Width="120" Content="Next" Click="Button_Click_1"
+                            Margin="0,-24,0,0"
+                            Visibility="Collapsed"
+                            Background="{StaticResource PhoneAccentBrush}"
+                            Grid.Column="1" HorizontalAlignment="Right"></Button>
+                </Grid>
+                
+            </StackPanel>
         </Grid>
+        
+  
     </Grid>
 
     <!-- Menu -->
